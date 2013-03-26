@@ -1,0 +1,85 @@
+name: OasisExtras
+main: net.charter.orion_pax.OasisExtras.OasisExtras
+version: 1.0
+description: Oasis Extra commands!
+author: Paxination
+depend: [OasisChat]
+commands:
+  extrasreload:
+    description:  Reloads OasisExtras config
+    usage:
+    permission: oasisextras.staff.extrasreload
+    permission-message: You don't have permissions for <permission>
+    
+  random:
+    description:  TP to a random location!
+    usage:
+    permission: oasisextras.random
+    permission-message: You don't have permissions for <permission>
+    
+  enableme:
+    description:  Funny broadcast message!
+    usage:
+    permission: oasisextras.staff.enableme
+    permission-message: You don't have permissions for <permission>
+    
+  disableme:
+    description:  Funny broadcast message!
+    usage:
+    permission: oasisextras.staff.disableme
+    permission-message: You don't have permissions for <permission>
+    
+  brocast:
+    description: Broadcasts a msg with prefix [Brocast] instead of [Broadcast]
+    usage: "Usage: /<command> Your message here!"
+    permission: oasisextras.staff.brocast
+    permission-message: You don't have permissions for <permission>
+    
+  spook:
+    description: Plays a sound effect at the specified player
+    usage: "Usage: /<command> playername [#1-10 optional]"
+    permission: oasisextras.staff.spook
+    permission-message: You don't have permissions for <permission>
+    
+  freeze:
+    description: Freezes the player in their tracks.
+    usage: "Usage: /<command> playername"
+    permission: oasisextras.staff.freeze
+    permission-message: You don't have permissions for <permission>
+    
+  drunk:
+    description: Makes players screen look like they are drunk!
+    usage: "Usage: /<command> playername [seconds (optional)]"
+    permission: oasisextras.staff.drunk
+    permission-message: You don't have permissions for <permission>
+    
+  slap:
+    description: Slaps a player!
+    usage: "Usage: /<command> playername [msg] (msg is optional)"
+    permission: oasisextras.staff.slap
+    permission-message: You don't have permissions for <permission>
+    
+permissions:
+    oasisextras.staff.*:
+        description: Gives access to all staff commands
+        children:
+            oasisextras.staff.enableme: true
+            oasisextras.staff.disableme: true
+            oasisextras.staff.brocast: true
+            oasisextras.staff.freeze: true
+            oasisextras.staff.drunk: true
+            oasisextras.staff.slap: true
+            oasisextras.staff.spook: true
+            
+    oasisextras.staff.dev:
+        description: Developer perks!
+        children:
+            oasisextras.staff.enableme: true
+            oasisextras.staff.disableme: true
+            oasisextras.staff.brocast: true
+            oasisextras.staff.freeze: true
+            oasisextras.staff.drunk: true
+            oasisextras.staff.slap: true
+            oasisextras.staff.slap.all: true
+            oasisextras.staff.extrasreload: true
+            
