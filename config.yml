@@ -1,5 +1,23 @@
-min_default_location: -100
-max_default_location: 100
+# random min and max values
+min_default_location: -2500
+max_default_location: 2500
+
+# random settings
 default_invulnerability_ticks: 6000
-world: 
+
+# Auto Save-All settings
+saveingmsg: Saving...
+saveingmsgcomplete: Save complete!
+# savealltimer is in mins
+savealltimer: 60
+warningdelay: 10
+
+#Auto broadcast settings
+broadcastmessages:
+  - Vote for OASIS at bit.ly/oasisv for 150 coins!
+  - Apply for member at bit.ly/OasisMember
+# also in minutes
+broadcasttimer: 30
+
+# Freeze settings
 frozen: {}

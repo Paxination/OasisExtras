@@ -5,7 +5,7 @@ description: Oasis Extra commands!
 author: Paxination
 depend: [OasisChat]
 commands:
-  extrasreload:
+  oasisextras:
     description:  Reloads OasisExtras config
     usage:
     permission: oasisextras.staff.extrasreload
@@ -81,5 +81,5 @@ permissions:
             oasisextras.staff.drunk: true
             oasisextras.staff.slap: true
             oasisextras.staff.slap.all: true
-            oasisextras.staff.extrasreload: true
+            oasisextras.staff.oasisextras: true
             
