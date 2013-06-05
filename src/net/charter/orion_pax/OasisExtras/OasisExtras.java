@@ -1,8 +1,6 @@
 package net.charter.orion_pax.OasisExtras;
 
 import java.io.*;
-import java.nio.channels.Channels;
-import java.nio.channels.ReadableByteChannel;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,19 +9,17 @@ import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
 
 public class OasisExtras extends JavaPlugin{
 
 	ConsoleCommandSender console;
 	HashMap<String, Location> frozen = new HashMap<String, Location>();
+	HashMap<String, Set<String>> mounted = new HashMap<String, Set<String>>();
 	String effectslist,savemsg1,savemsg2;
 	int default_min, default_max, ndt,bcastcount,warningtime;
 	long  savealltimer,bcasttimer;
@@ -48,6 +44,9 @@ public class OasisExtras extends JavaPlugin{
 			getCommand("slap").setExecutor(new OasisExtrasCommand(this));
 			getCommand("random").setExecutor(new OasisExtrasCommand(this));
 			getCommand("oasisextras").setExecutor(new OasisExtrasCommand(this));
+			getCommand("mount").setExecutor(new OasisExtrasCommand(this));
+			getCommand("unmount").setExecutor(new OasisExtrasCommand(this));
+			getCommand("godly").setExecutor(new OasisExtrasCommand(this));
 			setup();
 			effectslist = extras.effects();
 			console = Bukkit.getServer().getConsoleSender();
@@ -64,14 +63,14 @@ public class OasisExtras extends JavaPlugin{
 		task.savethisworld.cancel();
 		task.bcasttask.cancel();
 		task.remindmetask.cancel();
-		getLogger().info("net.charter.orion_pax.OasisExtras has been disabled!");
+		getLogger().info("OasisExtras has been disabled!");
 	}
 
 	public void setup(){
-		reloadConfig();
 		Set<String> flist = getConfig().getConfigurationSection("frozen").getKeys(false);
 		for (String playername : flist){
-			Location loc = new Location((World) getConfig().get("frozen." + playername + ".world"), getConfig().getDouble("frozen." + playername + ".x"), getConfig().getDouble("frozen." + playername + ".y"), getConfig().getDouble("frozen." + playername + ".z"));
+			String fworld = getConfig().getString("frozen." + playername + ".world");
+			Location loc = new Location(Bukkit.getWorld(fworld), getConfig().getDouble("frozen." + playername + ".x"), getConfig().getDouble("frozen." + playername + ".y"), getConfig().getDouble("frozen." + playername + ".z"));
 			frozen.put(playername, loc);
 			loc=null;
 		}
@@ -92,10 +91,10 @@ public class OasisExtras extends JavaPlugin{
 	}
 
 	public void savefrozen(Player player){
-		getConfig().set("frozen." + player.getName() + ".world", player.getLocation().getWorld());
-		getConfig().set("frozen." + player.getName() + ".x", player.getLocation().getX());
-		getConfig().set("frozen." + player.getName() + ".y", player.getLocation().getY());
-		getConfig().set("frozen." + player.getName() + ".z", player.getLocation().getZ());
+		getConfig().set("frozen." + player.getName() + ".world", player.getLocation().getWorld().getName());
+		getConfig().set("frozen." + player.getName() + ".x", player.getLocation().getBlockX());
+		getConfig().set("frozen." + player.getName() + ".y", player.getLocation().getBlockY());
+		getConfig().set("frozen." + player.getName() + ".z", player.getLocation().getBlockZ());
 	}
 
 	public void removefrozen(Player player){
@@ -117,7 +116,7 @@ public class OasisExtras extends JavaPlugin{
 			t.printStackTrace(pw);
 			for(String l: sw.toString().replace("\r", "").split("\n")){
 				out.println(l);
-				getServer().broadcast(l, "oasis.staff.dev");
+				getServer().broadcast(l, "oasis.debug");
 			}
 			pw.close();
 			out.println("**END**");

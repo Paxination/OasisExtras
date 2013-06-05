@@ -59,7 +59,28 @@ commands:
     permission: oasisextras.staff.slap
     permission-message: You don't have permissions for <permission>
     
+  mount:
+    description: Mounts a player!
+    usage: "Usage: /<command> playername [playername] (second one optional)"
+    permission: oasisextras.staff.mount
+    permission-message: You don't have permissions for <permission>
+    
+  unmount:
+    description: Unmounts a player!
+    usage: "Usage: /<command>"
+    permission: oasisextras.staff.unmount
+    permission-message: You don't have permissions for <permission>
+    
+  godly:
+    description: Changes the durability of the item in hand!
+    usage: "Usage: /<command>"
+    permission: oasisextras.staff.godly
+    permission-message: You don't have permissions for <permission>
+    
 permissions:
+    oasisextras.hidemsg:
+        description: Hides join/quit msgs
+        
     oasisextras.staff.*:
         description: Gives access to all staff commands
         children:

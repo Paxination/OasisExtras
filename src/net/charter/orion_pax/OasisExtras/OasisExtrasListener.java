@@ -1,12 +1,12 @@
 package net.charter.orion_pax.OasisExtras;
 
 import java.util.Iterator;
-import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,7 +14,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
 public class OasisExtrasListener implements Listener{
@@ -23,6 +25,22 @@ public class OasisExtrasListener implements Listener{
 
 	public OasisExtrasListener(OasisExtras plugin){
 		this.plugin = plugin;
+	}
+	
+	@EventHandler
+	public void OnPlayerJoin(PlayerJoinEvent event){
+		try {
+			event.setJoinMessage("");
+			Player[] onlinePlayers = Bukkit.getServer().getOnlinePlayers();
+			for (Player oplayer : onlinePlayers) {
+				if (!oplayer.hasPermission("oasisextras.hidemsg")){
+					oplayer.sendMessage(ChatColor.YELLOW + event.getPlayer().getName() + " has joined the game!");
+				}
+			}
+			
+		} catch (Throwable e) {
+			plugin.printStackTrace(e, "OnPlayerJoin");
+		}
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -56,10 +74,10 @@ public class OasisExtrasListener implements Listener{
 				event.getPlayer().sendMessage(ChatColor.RED + "YOU CAN NOT DESTROY BLOCKS WHILE " + ChatColor.AQUA + "FROZEN!");
 				event.setCancelled(true);
 			}
-			Set set = plugin.frozen.entrySet();
-			Iterator i = set.iterator();
+			Set<Entry<String, Location>> set = plugin.frozen.entrySet();
+			Iterator<Entry<String, Location>> i = set.iterator();
 			while(i.hasNext()) {
-				Map.Entry me = (Map.Entry)i.next();
+				Entry<String, Location> me = i.next();
 				Location loc = (Location) me.getValue();
 				if (event.getBlock().getLocation().getBlockY() == loc.getY()-1){
 					if (event.getBlock().getLocation().getBlockX() == loc.getX()) {
