@@ -76,7 +76,7 @@ public class OasisExtrasCMD {
 		while (test == false){
 			//loop++;
 			double x = this.randomNum(min, max) + 0.5;
-			double y = this.randomNum(64, 75) + 0.5;
+			double y = this.randomNum(64, 75);
 			double z = this.randomNum(min, max) + 0.5;
 
 			loc = new Location(world, x, y, z);//Location to tp to, and players bottom half
