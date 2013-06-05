@@ -32,7 +32,7 @@ public class OasisExtrasCommand implements CommandExecutor{
 
 	enum Commands {
 		SLAP, FREEZE, DRUNK, SPOOK, ENABLEME, MOUNT, UNMOUNT,
-		DISABLEME, BROCAST, RANDOM, OASISEXTRAS,GODLY
+		DISABLEME, BROCAST, RANDOM, OASISEXTRAS
 	}
 
 	enum SubCommands {
@@ -73,19 +73,6 @@ public class OasisExtrasCommand implements CommandExecutor{
 			}
 
 			switch (mycommand) {
-				
-				case GODLY:
-					if (args.length==1){
-						PlayerInventory inventory = player.getInventory();
-						short durability = Short.parseShort(args[0]);
-						ItemStack helditem = inventory.getItemInHand();
-						helditem.setDurability(durability);
-						player.updateInventory();
-						return true;
-					} else {
-						player.sendMessage(ChatColor.GOLD + "Usage: /GODLY <damage value>");
-						return true;
-					}
 				
 				case MOUNT:
 					if (args.length==1){

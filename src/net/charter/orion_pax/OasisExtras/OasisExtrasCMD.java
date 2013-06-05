@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -74,9 +75,9 @@ public class OasisExtrasCMD {
 		//int loop=0;
 		while (test == false){
 			//loop++;
-			int x = this.randomNum(min, max);
-			int y = this.randomNum(64, 75);
-			int z = this.randomNum(min, max);
+			double x = this.randomNum(min, max) + 0.5;
+			double y = this.randomNum(64, 75) + 0.5;
+			double z = this.randomNum(min, max) + 0.5;
 
 			loc = new Location(world, x, y, z);//Location to tp to, and players bottom half
 			Location block1 = new Location(world, x, (y-1), z);//Block under player
@@ -88,7 +89,8 @@ public class OasisExtrasCMD {
 				test=true;
 			}
 		}
-
+		Chunk thischunk = loc.getChunk();
+		thischunk.load(true);
 		return loc;
 	}
 }
