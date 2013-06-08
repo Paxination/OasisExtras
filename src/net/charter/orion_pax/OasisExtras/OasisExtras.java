@@ -46,7 +46,7 @@ public class OasisExtras extends JavaPlugin{
 			getCommand("oasisextras").setExecutor(new OasisExtrasCommand(this));
 			getCommand("mount").setExecutor(new OasisExtrasCommand(this));
 			getCommand("unmount").setExecutor(new OasisExtrasCommand(this));
-			getCommand("godly").setExecutor(new OasisExtrasCommand(this));
+			getCommand("chant").setExecutor(new OasisExtrasCommand(this));
 			setup();
 			effectslist = extras.effects();
 			console = Bukkit.getServer().getConsoleSender();

@@ -35,6 +35,12 @@ commands:
     permission: oasisextras.staff.brocast
     permission-message: You don't have permissions for <permission>
     
+  chant:
+    description: Broadcasts a msg
+    usage: "Usage: /<command> Your message here!"
+    permission: oasisextras.staff.chant
+    permission-message: You don't have permissions for <permission>
+    
   spook:
     description: Plays a sound effect at the specified player
     usage: "Usage: /<command> playername [#1-10 optional]"
@@ -71,16 +77,7 @@ commands:
     permission: oasisextras.staff.unmount
     permission-message: You don't have permissions for <permission>
     
-  godly:
-    description: Changes the durability of the item in hand!
-    usage: "Usage: /<command>"
-    permission: oasisextras.staff.godly
-    permission-message: You don't have permissions for <permission>
-    
 permissions:
-    oasisextras.hidemsg:
-        description: Hides join/quit msgs
-        
     oasisextras.staff.*:
         description: Gives access to all staff commands
         children:
@@ -91,16 +88,3 @@ permissions:
             oasisextras.staff.drunk: true
             oasisextras.staff.slap: true
             oasisextras.staff.spook: true
-            
-    oasisextras.staff.dev:
-        description: Developer perks!
-        children:
-            oasisextras.staff.enableme: true
-            oasisextras.staff.disableme: true
-            oasisextras.staff.brocast: true
-            oasisextras.staff.freeze: true
-            oasisextras.staff.drunk: true
-            oasisextras.staff.slap: true
-            oasisextras.staff.slap.all: true
-            oasisextras.staff.oasisextras: true
-            

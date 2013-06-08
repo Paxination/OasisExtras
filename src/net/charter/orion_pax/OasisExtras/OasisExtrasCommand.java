@@ -26,17 +26,17 @@ public class OasisExtrasCommand implements CommandExecutor{
 		this.plugin = plugin;
 	}
 	
-	Entity rider;
+	Entity vehicle;
 	Entity passenger;
 	
 
 	enum Commands {
 		SLAP, FREEZE, DRUNK, SPOOK, ENABLEME, MOUNT, UNMOUNT,
-		DISABLEME, BROCAST, RANDOM, OASISEXTRAS
+		DISABLEME, BROCAST, RANDOM, OASISEXTRAS, CHANT
 	}
 
 	enum SubCommands {
-		RELOAD, CANCEL, SAVEALL, BCAST, START, CONFIG, PORTAL, SET, CLEAR, LIST
+		RELOAD, CANCEL, SAVEALL, BCAST, START, CONFIG, SET, CLEAR, LIST, ADD, REMOVE
 	}
 
 	String[] oasisextrassub = {
@@ -45,21 +45,21 @@ public class OasisExtrasCommand implements CommandExecutor{
 			,ChatColor.GOLD + "RELOAD - Reloads config"
 			,ChatColor.GOLD + "CANCEL SAVEALL/BCAST/CONFIG"
 			,ChatColor.GOLD + "START SAVEALL/BCAST/CONFIG"
-			,ChatColor.GOLD + "PORTAL SET/CLEAR/LIST"
+			,ChatColor.GOLD + "BCAST LIST/ADD/REMOVE"
 			,ChatColor.GOLD + "Do /oasisextras [subcommand] for more info"
 	}; 
 
 	String[] oasisextrassub2 = {
 			ChatColor.GOLD + "Usage as follows...."
-			,ChatColor.GOLD + "/oasisextras PORTAL SET - Sets a random portal location"
-			,ChatColor.GOLD + "/oasisextras PORTAL CLEAR - Clears a random portal location"
-			,ChatColor.GOLD + "/oasisextras PORTAL LIST - List available random portals"
 			,ChatColor.GOLD + "/oasisextras CANCEL BCAST - Cancels auto broadcast"
 			,ChatColor.GOLD + "/oasisextras CANCEL SAVEALL - Cancels auto saveall"
 			,ChatColor.GOLD + "/oasisextras CANCEL CONFIG - Cancels auto save config"
 			,ChatColor.GOLD + "/oasisextras START BCAST - Starts auto broadcast"
 			,ChatColor.GOLD + "/oasisextras START SAVEALL - Starts auto saveall"
 			,ChatColor.GOLD + "/oasisextras START CONFIG - Starts auto save config"
+			,ChatColor.GOLD + "/oasisextras BCAST LIST - List auto bcast msgs"
+			,ChatColor.GOLD + "/oasisextras BCAST ADD - Adds a msg to the auto bcast list"
+			,ChatColor.GOLD + "/oasisextras BCAST REMOVE - Removes a msg from the auto bcast list"
 	};
 
 	@Override
@@ -74,13 +74,28 @@ public class OasisExtrasCommand implements CommandExecutor{
 
 			switch (mycommand) {
 				
+				case CHANT:
+					if (args.length>0){
+						StringBuffer buffer = new StringBuffer();
+						buffer.append(args[0]);
+						for (int i = 1; i < args.length; i++) {
+							buffer.append(" ");
+							buffer.append(args[i]);
+						}
+						String message = buffer.toString();
+						plugin.getServer().broadcastMessage(ChatColor.translateAlternateColorCodes('&', message));
+						return true;
+					} else {
+						sender.sendMessage(ChatColor.GOLD + "Usage: /CHANT msg");
+						return true;
+					}
+					
 				case MOUNT:
 					if (args.length==1){
-						rider=Bukkit.getPlayer(args[0]);
+						vehicle=Bukkit.getPlayer(args[0]);
 						passenger = (Entity) sender;
-						if ((rider!=null) && (sender instanceof Player)){
-							Set<String> myride;
-							rider.setPassenger(passenger);
+						if ((vehicle!=null) && (sender instanceof Player)){
+							vehicle.setPassenger(passenger);
 							sender.sendMessage(ChatColor.GOLD + "You have mounted " + Bukkit.getPlayer(args[0]).getName());
 							if (!plugin.mounted.containsKey(sender.getName())){
 								plugin.mounted.put(sender.getName(),null);
@@ -89,10 +104,10 @@ public class OasisExtrasCommand implements CommandExecutor{
 							return true;
 						}
 					} else if (args.length==2){
-						rider=Bukkit.getPlayer(args[0]);
-						passenger = Bukkit.getPlayer(args[1]);
-						if ((rider!=null) && (passenger!=null) && (sender instanceof Player)){
-							rider.setPassenger(passenger);
+						vehicle=Bukkit.getPlayer(args[1]);
+						passenger = Bukkit.getPlayer(args[0]);
+						if ((vehicle!=null) && (passenger!=null) && (sender instanceof Player)){
+							vehicle.setPassenger(passenger);
 							return true;
 						} else {
 							if (!(sender instanceof Player)) {
@@ -110,12 +125,18 @@ public class OasisExtrasCommand implements CommandExecutor{
 					
 				case UNMOUNT:
 					if (args.length==1) {
-						Player me = (Player) sender;
-						if (me.isInsideVehicle()) {
-							
+						Player target = plugin.getServer().getPlayer(args[0]);
+						if (target.isInsideVehicle()) {
+							target.leaveVehicle();
+							return true;
 						}
+						return true;
 					} else {
-						sender.sendMessage(ChatColor.GOLD + "Usage: /unmount playername");
+						if (player.isInsideVehicle()) {
+							player.leaveVehicle();
+							return true;
+						}
+						return true;
 					}
 				case OASISEXTRAS:
 					if (args.length==0){
@@ -316,7 +337,7 @@ public class OasisExtrasCommand implements CommandExecutor{
 						}
 						String message = buffer.toString();
 						plugin.getServer().broadcastMessage(
-								ChatColor.RED + "[" + ChatColor.DARK_RED + "Brocast" + ChatColor.RED + "] " + ChatColor.GOLD + message);
+								ChatColor.RED + "[" + ChatColor.DARK_RED + "Brocast" + ChatColor.RED + "] " + ChatColor.GOLD + ChatColor.translateAlternateColorCodes('&', message));
 						return true;
 					} else {
 						return false;

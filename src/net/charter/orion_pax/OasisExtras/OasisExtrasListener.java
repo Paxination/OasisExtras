@@ -29,18 +29,7 @@ public class OasisExtrasListener implements Listener{
 	
 	@EventHandler
 	public void OnPlayerJoin(PlayerJoinEvent event){
-		try {
-			event.setJoinMessage("");
-			Player[] onlinePlayers = Bukkit.getServer().getOnlinePlayers();
-			for (Player oplayer : onlinePlayers) {
-				if (!oplayer.hasPermission("oasisextras.hidemsg")){
-					oplayer.sendMessage(ChatColor.YELLOW + event.getPlayer().getName() + " has joined the game!");
-				}
-			}
-			
-		} catch (Throwable e) {
-			plugin.printStackTrace(e, "OnPlayerJoin");
-		}
+	
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST)

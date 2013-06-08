@@ -16,6 +16,7 @@ warningdelay: 10
 broadcastmessages:
   - Vote for OASIS at bit.ly/oasisv for 150 coins!
   - Apply for member at bit.ly/OasisMember
+  - Donate for the server at bit.ly/ODonate
 # also in minutes
 broadcasttimer: 30
 
